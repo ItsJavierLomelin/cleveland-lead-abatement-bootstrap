@@ -34,6 +34,10 @@ No npm install is needed. The builder updates visible numbers, all call links an
 - `assets/js/lead-form.js`: original lead form validation/confirmation logic
 - `assets/img/`: all original images, logo and favicon
 
+Pages are built as named .html files (services/lead-risk-assessment.html, not folder/index.html) so website importers keep each page's real name and slug. The root page stays index.html.
+
+Hero backgrounds are emitted inline on the section element by scripts/build.mjs (literal gradient, image URL and fallback color, no CSS custom properties) so website importers keep the hero image and color at every viewport; assets/css/site.css keeps a literal fallback.
+
 Bootstrap's responsive grid powers the hero and card grids. Bootstrap Collapse powers the mobile navigation and nested menus. Form controls, buttons and cards use Bootstrap components with the original design preserved. Bootstrap Reboot is omitted so it does not alter the approved typography. The precompiled custom CSS is included; to change its component selection, compile source/bootstrap.scss using Sass and Bootstrap 5.3.8.
 
 The original form IDs and Airchatty tracking script are preserved. Submissions still require an internet connection and the existing external service; they were not submitted during verification. The emergency contact numbers in the copy are intentionally unchanged.
