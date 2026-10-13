@@ -10,7 +10,7 @@ const escape=v=>String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replace
 const base=site.base.replace(/\/$/,'');
 let menuId=0;
 for(const [route,template] of Object.entries(pages)) {
- const output=route==='404.html'?route:(!route||route==='/')?'index.html':route.replace(/^\//,'').replace(/\/$/,'')+'/index.html';
+ const output=route==='404.html'?route:(!route||route==='/')?'index.html':route.replace(/^\//,'').replace(/\/$/,'')+'.html'; // named .html files, so website importers keep each page's real name/slug instead of 'index'
  let html=template.replaceAll('{{ORIGIN}}',escape(site.origin+base)).replaceAll('{{PHONE_DISPLAY}}',escape(phone.display)).replaceAll('{{PHONE_TEL}}',escape(phone.tel));
  html=html.replace('<link rel="stylesheet" href="/assets/css/site.css">','<link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.custom.min.css">\n<link rel="stylesheet" href="/assets/css/site.css">\n<link rel="stylesheet" href="/assets/css/bootstrap-fidelity.css">');
  html=html.replace('class="wrap head-in"','class="container wrap head-in"')
@@ -30,10 +30,13 @@ for(const [route,template] of Object.entries(pages)) {
  .replace(/<input (?!class="hp")/g,'<input class="form-control" ')
  .replace(/<textarea /g,'<textarea class="form-control" ')
  .replace('<script src="/assets/js/site.js" defer></script>','<script src="/assets/vendor/bootstrap/bootstrap.bundle.min.js" defer></script>\n<script src="/assets/js/site.js" defer></script>');
+ // Inline hero backgrounds (literal values, no CSS vars) so website importers keep hero image and color on every viewport.
+ html=html.replace(/<section class="hero">/g,'<section class="hero" style="background:linear-gradient(135deg,#e8efe9,#faf7f0)">')
+ .replace(/<section class="hero hero-home" style="--hero-img:url\('([^']*)'\)">/g,(m,u)=>`<section class="hero hero-home" style="background:linear-gradient(100deg,rgba(7,38,34,.93) 0%,rgba(7,38,34,.78) 55%,rgba(7,38,34,.55) 100%),url('${u}') center/cover no-repeat #072622;color:#fff">`);
  // Portable relative links: works from file://, a local server or any folder.
  const depth=output.split('/').length-1;
  const rel=depth?'../'.repeat(depth):'./';
- const localPath=p=>{const [path,hash]=p.split('#');const file=path==='/'?'index.html':path.endsWith('/')?path.slice(1)+'index.html':path.slice(1);return rel+file+(hash?'#'+hash:'');};
+ const localPath=p=>{const [path,hash]=p.split('#');const file=path==='/'?'index.html':path.endsWith('/')?path.slice(1,-1)+'.html':path.slice(1);return rel+file+(hash?'#'+hash:'');};
  html=html.replace(/(href|src|action)="\/(?!\/)([^"]*)"/g,(_,attr,path)=>`${attr}="${localPath('/'+path)}"`)
  .replace(/url\('\/(?!\/)([^']*)'\)/g,(_,path)=>`url('${rel}${path}')`);
  await mkdir(dirname(resolve(root,output)),{recursive:true});
