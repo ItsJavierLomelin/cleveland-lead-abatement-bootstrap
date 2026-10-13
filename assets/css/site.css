@@ -27,7 +27,7 @@ h1{font-size:clamp(2rem,4.2vw,3.2rem)}h2{font-size:clamp(1.5rem,2.6vw,2.1rem)}h3
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:start}
 .hero-copy .lead{font-size:1.14rem;max-width:62ch}.crumbs{font-size:.9rem;color:var(--muted);margin-bottom:14px}.crumbs a{color:var(--muted)}
 .hero-call{margin:22px 0 0}.hero-call .btn{padding:.8em 1.2em}
-.hero-home{background:linear-gradient(100deg,rgba(7,38,34,.93) 0%,rgba(7,38,34,.78) 55%,rgba(7,38,34,.55) 100%),var(--hero-img) center/cover;color:#fff}
+.hero-home{background:linear-gradient(100deg,rgba(7,38,34,.93) 0%,rgba(7,38,34,.78) 55%,rgba(7,38,34,.55) 100%) #072622;color:#fff}
 .hero-home h1,.hero-home .lead{color:#fff}.hero-home .btn-ghost{color:#fff}
 .form-card{background:#fff;color:var(--ink);border-radius:12px;padding:26px;box-shadow:0 18px 44px rgba(10,40,36,.2);border-top:5px solid var(--amber)}
 .form-card h2{font-size:1.5rem;margin-bottom:.3em}.form-card-head p{margin:0 0 14px;font-size:.96rem;color:var(--muted)}
